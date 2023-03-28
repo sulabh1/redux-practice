@@ -10,13 +10,12 @@ const login =
 
     try {
       const res = await baseUrl.post("/users/login", body, config);
-      console.log(res.data, "login");
 
       dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
     } catch (error) {
-      const err = error.res.data.errors;
+      const err = error.res.data.message;
       if (err) {
-        err.forEach((element) => dispatch(setAlert(element.message, "danger")));
+        dispatch(setAlert(err, "danger"));
       }
       dispatch({ type: LOGIN_FAIL });
     }

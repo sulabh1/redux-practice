@@ -12,7 +12,7 @@ const register = (state = initialState, action) => {
 
   switch (type) {
     case REGISTER_SUCCESS:
-      localStorage.setItem("token", payload.token);
+      localStorage.setItem("token", payload);
       return { ...state, ...payload, isAuthenticated: true, loading: false };
     case REGISTER_FAIL:
       localStorage.removeItem("token");
