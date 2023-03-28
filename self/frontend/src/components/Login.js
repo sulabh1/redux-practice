@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Card, InputGroup, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import login from "../actions/login";
+import setAlert from "../actions/alert";
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, setAlert }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,6 +17,8 @@ const Login = ({ login, isAuthenticated }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     login({ email, password });
+
+    navigate("/tasks");
   };
 
   const { email, password } = formData;
@@ -62,10 +66,11 @@ const Login = ({ login, isAuthenticated }) => {
 Login.prototype = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProp = (state) => ({
   isAuthenticated: state.login.isAuthenticated,
 });
 
-export default connect(mapStateToProp, { login })(Login);
+export default connect(mapStateToProp, { login, setAlert })(Login);

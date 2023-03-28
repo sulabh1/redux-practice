@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Button, InputGroup, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -9,6 +9,7 @@ import { register } from "../actions/register";
 import setAlert from "../actions/alert";
 
 const Register = ({ isAuthenticated, setAlert, register }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -30,6 +31,7 @@ const Register = ({ isAuthenticated, setAlert, register }) => {
       setAlert("password didnot matched", "danger");
     } else {
       register({ name, email, password });
+      navigate("/login");
     }
   };
 

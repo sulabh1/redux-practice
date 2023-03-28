@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
 const { promisify } = require("util");
 
-const AppError = require("./AppError");
-const { Users } = require("../models");
+const AppError = require("./AppError.middlewares");
+const Users = require("../models/user.models");
 
 const protect = async (req, res, next) => {
   const token = req.headers["x-access-token"];
@@ -16,15 +16,14 @@ const protect = async (req, res, next) => {
       return next(new AppError("User unauthorized", StatusCodes.UNAUTHORIZED));
     }
 
-    const { id, name, email } = user;
-    console.log(email);
-    const userExist = await Users.findOne({ where: { email } });
+    const { name, email } = user;
+    const userExist = await Users.findOne({ email });
 
     if (!userExist) {
       return next(new AppError("User doesnot exist", StatusCodes.BAD_REQUEST));
     }
 
-    req.user = { id, name, email };
+    req.user = { id: userExist._id, name, email };
 
     next();
   } catch (error) {
