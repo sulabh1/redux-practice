@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -8,6 +8,7 @@ import { task } from "../actions/task";
 
 const ListingTask = ({ task, data }) => {
   const navigate = useNavigate();
+
   useEffect(() => {
     task();
   }, [task]);
@@ -27,7 +28,6 @@ const ListingTask = ({ task, data }) => {
               <th>date</th>
               <th>User</th>
               <th>Completed</th>
-              <th>Completion rate</th>
             </tr>
           </thead>
           <tbody onClick={(e) => clickHandler(e, el._id)}>
@@ -37,7 +37,6 @@ const ListingTask = ({ task, data }) => {
               <td>{el.date}</td>
               <td>{el.user.name}</td>
               <td>{el.completed === true ? "completed" : "incomplete"}</td>
-              <td></td>
             </tr>
           </tbody>
         </Table>

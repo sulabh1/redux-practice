@@ -42,7 +42,6 @@ exports.listTask = async (req, res, next) => {
 exports.listSingleTask = async (req, res, next) => {
   const { id } = req.params;
   try {
-    console.log("aaa");
     const task = await Tasks.findById(id).populate("user");
     res.status(StatusCodes.OK).json({ status: "Listing single task", task });
   } catch (error) {
@@ -53,13 +52,13 @@ exports.listSingleTask = async (req, res, next) => {
 exports.updateTask = async (req, res, next) => {
   const { id } = req.params;
   const { name, date, completed } = req.body;
-  try {
-    const task = await Tasks.findByIdAndUpdate(
-      { id },
-      { name, date, completed }
-    );
 
-    res.status(StatusCodes.OK).json({ status: "Listing single task", task });
+  console.log(id);
+
+  try {
+    await Tasks.findByIdAndUpdate({ _id: id }, { name, date, completed });
+
+    res.status(StatusCodes.OK).json({ status: "Task update successfully" });
   } catch (error) {
     next(error);
   }
