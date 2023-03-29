@@ -8,6 +8,7 @@ import store from "./store";
 import Alert from "./components/layout/Alert";
 import Tasks from "./components/Tasks";
 import Protected from "./components/Protected";
+import ListingSingleTask from "./components/ListingSingleTask";
 
 function App() {
   return (
@@ -23,6 +24,12 @@ function App() {
             path="/tasks"
             element={<Protected Component={Tasks} />}
           />
+          <Route
+            exact
+            path="/tasks/:id"
+            element={<Protected Component={ListingSingleTask} />}
+          />
+          ;
         </Routes>
       </Router>
     </Provider>
