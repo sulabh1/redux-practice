@@ -11,8 +11,14 @@ import ListingTask from "./ListingTask";
 const Tasks = ({ createTask }) => {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
+  const [radio, setRadio] = useState(false);
 
   const onChange = (e) => setName(e.target.value);
+
+  const onChangeInput = (e) => {
+    // console.log();
+    setRadio(!radio);
+  };
 
   const dateOnChange = (e) => {
     const dateObj = new Date(e._d);
@@ -22,7 +28,7 @@ const Tasks = ({ createTask }) => {
 
   const onClick = (e) => {
     e.preventDefault();
-    createTask({ name, date });
+    createTask({ name, date, completed: radio });
   };
   return (
     <div>
@@ -36,7 +42,23 @@ const Tasks = ({ createTask }) => {
           onChange={(e) => onChange(e)}
         />
       </InputGroup>
+      <p>Last date of complete the task</p>
+
       <Datetime onChange={(e) => dateOnChange(e)} />
+
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value={radio}
+          id="flexCheckDefault"
+          onChange={(e) => onChangeInput(e)}
+        />
+        <label className="form-check-label" htmlFor="flexCheckDefault">
+          completed?
+        </label>
+      </div>
+
       <br />
       <Button variant="primary" onClick={(e) => onClick(e)}>
         Submit

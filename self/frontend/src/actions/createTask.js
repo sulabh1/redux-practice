@@ -3,14 +3,14 @@ import setAlert from "./alert";
 import { CREATE_TASK_SUCCESS, CREATE_TASK_FAIL } from "./types";
 
 const createTask =
-  ({ name, date }) =>
+  ({ name, date, completed }) =>
   async (dispatch) => {
     const token = localStorage.getItem("token");
 
     const config = {
       headers: { "Content-Type": "application/json", "x-access-token": token },
     };
-    const body = JSON.stringify({ name, date });
+    const body = JSON.stringify({ name, date, completed });
 
     try {
       const res = await baseUrl.post("/tasks", body, config);

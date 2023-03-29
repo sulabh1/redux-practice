@@ -1,14 +1,22 @@
-import { LOAD_TASK_FAIL, LOAD_TASK_SUCCESS } from "../actions/types";
+import {
+  LOAD_TASK_FAIL,
+  LOAD_TASK_SUCCESS,
+  LOAD_SINGLE_TASK,
+  LOAD_ERROR_TASK,
+} from "../actions/types";
 
-const initialState = [];
+const initialState = {};
 
 const task = (state = initialState, action) => {
   const { type, payload } = action;
+
   switch (type) {
     case LOAD_TASK_SUCCESS:
-      return [...state, ...payload];
+    case LOAD_SINGLE_TASK:
+      return { ...state, ...payload };
     case LOAD_TASK_FAIL:
-      return [];
+    case LOAD_ERROR_TASK:
+      return {};
     default:
       return state;
   }

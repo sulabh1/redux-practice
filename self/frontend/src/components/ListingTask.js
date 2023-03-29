@@ -2,49 +2,51 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { task } from "../actions/task";
 
 const ListingTask = ({ task, data }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     task();
-  }, []);
+  }, [task]);
 
-  data.map((el) => {
-    console.log(el);
-  });
-  return (
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Name</th>
-            <th>date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan={2}>Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </Table>
-    </div>
-  );
+  const clickHandler = (e, id) => {
+    navigate(`/tasks/${id}`);
+  };
+
+  const listingTask =
+    data?.task?.length > 0 ? (
+      data?.task?.map((el, i) => (
+        <Table striped bordered hover key={i}>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Name</th>
+              <th>date</th>
+              <th>User</th>
+              <th>Completed</th>
+              <th>Completion rate</th>
+            </tr>
+          </thead>
+          <tbody onClick={(e) => clickHandler(e, el._id)}>
+            <tr>
+              <td>{el._id}</td>
+              <td>{el.name}</td>
+              <td>{el.date}</td>
+              <td>{el.user.name}</td>
+              <td>{el.completed === true ? "completed" : "incomplete"}</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </Table>
+      ))
+    ) : (
+      <h1>No data found</h1>
+    );
+
+  return <div>{listingTask}</div>;
 };
 
 const mapStateToProp = (state) => ({
@@ -54,7 +56,7 @@ const mapStateToProp = (state) => ({
 
 ListingTask.prototype = {
   task: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProp, { task })(ListingTask);
