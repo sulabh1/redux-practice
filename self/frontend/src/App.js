@@ -9,6 +9,7 @@ import Alert from "./components/layout/Alert";
 import Tasks from "./components/Tasks";
 import Protected from "./components/Protected";
 import ListingSingleTask from "./components/ListingSingleTask";
+import UpdateTask from "./components/UpdateTask";
 
 function App() {
   return (
@@ -28,6 +29,11 @@ function App() {
             exact
             path="/tasks/:id"
             element={<Protected Component={ListingSingleTask} />}
+          />
+          <Route
+            exact
+            path="/tasks/update/:id"
+            element={<Protected Component={UpdateTask} />}
           />
           ;
         </Routes>

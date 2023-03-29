@@ -5,6 +5,7 @@ const {
   createTask,
   listTask,
   listSingleTask,
+  updateTask,
 } = require("../controllers/task.controllers");
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.post(
 
 router.get("/", listTask);
 router.get("/:id", listSingleTask);
+router.put("/:id", updateTask);
 
 module.exports = router;
